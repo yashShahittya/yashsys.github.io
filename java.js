@@ -302,13 +302,13 @@ function initTopNavbar() {
   function redirectToPage(pageType) {
     switch (pageType) {
       case 'update':
-        window.location.href = '/update.html';
+        window.location.href = './update.html';
         break;
       case 'cleaner':
-        window.location.href = '/Cleaner.html';
+        window.location.href = './Cleaner.html';
         break;
       case 'booster':
-        window.location.href = '/Booster.html';
+        window.location.href = './Booster.html';
         break;
       default:
         console.warn('Unknown page type:', pageType);
