@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Enhancer</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="sidebar d-flex flex-column justify-content-between">
+    <div>
+      <h4 class="text-center">SysMonitor</h4>
+      <a href="./index.html" class="nav-link">Dashboard</a>
+
+      <a href="./Booster.html" class="nav-link" onclick="setMode('basic')">Booster</a>
+      <a href="./Cleaner.html" class="nav-link" onclick="setMode('basic')">Cleaner</a>
+
+      <a href="./clone.html" class="nav-link " onclick="setMode('basic')">Virtual Repair</a>
+      <a href="./troubleshoot.html" class="nav-link" onclick="setMode('basic')">Troubleshooter</a>
+      <a href="./security.html" class="nav-link " onclick="setMode('basic')">Security</a>
+      <a href="./update.html" class="nav-link " onclick="setMode('basic')">Update</a>
+    </div>
+    
+    <!-- VPN Button at bottom -->
+    <div class="vpn-sidebar-btn text-center">
+      <button class="btn-vpn" id="vpnButton" onclick="connectVPN()">Connect to VPN</button>
+    </div>
+  </div>
+ 
+  <div class="content">
+    <!-- Booster Section -->
+    <div id="booster" class="enhancer-section">
+      <div class="content">
+        <!-- Booster Section -->
+        <section id="booster" class="enhancer-section">
+    
+          <div class="mb-5">
+            <h2>System Booster</h2>
+            <p>Optimize your system performance by enhancing critical system resources</p>
+          </div>
+    
+          <div class="central-boost-container text-center mb-4">
+            <div class="boost-circle">
+              <div class="boost-circle-outer">
+                <div id="boost-progress" class="boost-progress"></div>
+              </div>
+              <div class="boost-content">
+                <div id="boost-percentage" class="boost-label">0%</div>
+                <div id="boost-status-text" class="boost-status-text">Ready to Optimize</div>
+              </div>
+            </div>
+          </div>
+    
+          <div class="row text-center mb-4">
+            <div class="col stat-card">
+              <div class="stat-icon">🧹</div>
+              <div id="memory-freed-stat" class="stat-value">0 MB</div>
+              <div class="stat-label">Memory Freed</div>
+            </div>
+            <div class="col stat-card">
+              <div class="stat-icon">⚡</div>
+              <div id="cpu-usage-stat" class="stat-value">32%</div>
+              <div class="stat-label">CPU Usage</div>
+            </div>
+            <div class="col stat-card">
+              <div class="stat-icon">🚀</div>
+              <div id="performance-gain-stat" class="stat-value">0%</div>
+              <div class="stat-label">Performance Gain</div>
+            </div>
+          </div>
+    
+          <div class="boost-container mb-5">
+            <h4 class="section-title">Memory Optimization</h4>
+    
+            <div class="memory-usage mb-3">
+              <div class="d-flex justify-content-between">
+                <span>Current RAM Usage</span>
+                <span id="ram-usage-percentage">92%</span>
+              </div>
+              <div class="memory-bar">
+                <div id="memory-used" class="memory-used" style="width: 92%;"></div>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span>RAM capacity 7.9GB</span>
+                <span id="ram-available">634MB available</span>
+              </div>
+            </div>
+    
+            <div class="processes-container mb-4">
+              <h5 class="section-subtitle">Running Processes</h5>
+              <div class="processes-list">
+                <!-- Each process item -->
+                <!-- Repeat this structure for other processes -->
+                <div class="process-item d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="process-name">Chrome.exe</div>
+                    <div class="process-memory">1240 MB</div>
+                  </div>
+                  <input type="checkbox" id="process1" checked>
+                </div>
+              </div>
+            </div>
+    
+            <div class="boost-actions text-center">
+              <button id="boost-button" class="btn btn-success">Boost Now</button>
+              <button id="auto-boost-button" class="btn btn-outline-light ms-2">Auto Boost</button>
+            </div>
+          </div>
+    
+    </div>
+    <!-- Cleaner Section -->
+    <div id="cleaner" class="enhancer-section d-none">
+      <h2>Cleaner</h2>
+      <div class="card-custom p-4">
+        <h5 class="mb-3">Scan</h5>
+        <button class="btn btn-outline-info mb-3" onclick="showScanResult()">SCAN</button>
+        <div class="mb-2">
+          <strong>Result:</strong>
+          <p>Space to be cleaned: -</p>
+          <p>Tweaks to be optimized: -</p>
+          <p>Disks to be defragmented: -</p>
+          <p>Last cleaned: --</p>
+        </div>
+        <button class="btn btn-secondary" onclick="openSchedule()">Scheduler</button>
+        <div id="scheduleForm" class="mt-3 d-none">
+          <label for="scheduleDate">Date:</label>
+          <input type="date" id="scheduleDate" class="form-control mb-2">
+          <label for="scheduleTime">Time:</label>
+          <input type="time" id="scheduleTime" class="form-control mb-2">
+          <button class="btn btn-success" onclick="saveSchedule()">Save Schedule</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VPN Modal -->
+  <div id="vpnModal" class="vpn-modal d-none">
+    <div class="vpn-modal-content">
+      <span class="close-button" onclick="closeVPNModal()">×</span>
+      <div class="modal-icon">
+        <div style="color: #00c389; font-size: 48px;"><img src="./png-clipart-man-riding-on-spaceship-illustration-website-service-rocket-man-rocket-rocket-english-computer-wallpaper-thumbnail-removebg-preview.png" alt=""></div>
+      </div>
+      <h4>VPN Connected</h4>
+      <p class="modal-subtitle">Your secure connection has been established successfully.</p>
+      <button class="btn btn-success modal-close-btn" onclick="closeVPNModal()">Close</button>
+    </div>
+  </div>
+<!-- SysGenie LLM Assistant -->
+<!-- SysGenie Interactive Chatbox -->
+  <!-- SysGenie Interactive Chatbox -->
+  <div id="sysgenie-box" class="d-none">
+    <div class="header d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <img src="./image-removebg-preview.png" alt="SysGenie" id="genie-avatar" />
+        <strong class="ms-2">SysGenie</strong>
+      </div>
+      <button onclick="toggleAssistant()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">×</button>
+    </div>
+
+    <div class="body" id="genieChatLog">
+      <p class="assistant"><em>Hi! What would you like to do?</em></p>
+      <div class="quick-options">
+        <button onclick="simulateLLM('Do a quick scan')">Quick Scan</button>
+        <button onclick="simulateLLM('Boost system performance')">Boost</button>
+        <button onclick="simulateLLM('Check drive health')">Drive Health</button>
+        <button onclick="simulateLLM('Connect to VPN')">Connect VPN</button>
+      </div>
+    </div>
+
+    <div class="footer d-flex align-items-center">
+      <button id="fileUploadBtn" class="upload-btn" onclick="document.getElementById('fileInput').click()">+</button>
+      <input type="file" id="fileInput" style="display: none" onchange="scanFileForVirus(event)">
+      <input type="text" id="genieInput" placeholder="Ask anything or upload file for scanning.." onkeydown="handleGenieInput(event)" class="flex-grow-1 ms-2" />
+    </div>
+  </div>
+
+  <!-- Floating Chatbot Toggle Button -->
+  <div id="sysgenie-toggle" onclick="toggleAssistant()">
+    <img src="./image-removebg-preview.png" alt="SysGenie" id="sysgenie-icon" />
+    <span class="message-label">Chat with me</span>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="./script.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

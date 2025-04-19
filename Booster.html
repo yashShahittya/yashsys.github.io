@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Monitor Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css">
+<link rel="stylesheet" href="./Booster-styles.css">
+
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar d-flex flex-column justify-content-between">
+    <div>
+      <h4 class="text-center">SysMonitor</h4>
+      <a href="./index.html" class="nav-link " onclick="setMode('basic')">Dashboard</a>
+      <a href="./Booster.html" class="nav-link active" onclick="setMode('basic')">Booster</a>
+      <a href="./Cleaner.html" class="nav-link" onclick="setMode('basic')">Cleaner</a>
+      <a href="./clone.html" class="nav-link">Virtual Repair</a>
+      <a href="./troubleshoot.html" class="nav-link">Troubleshooter</a>
+      <a href="./security.html" class="nav-link">Security</a>
+      <a href="./update.html" class="nav-link" onclick="setMode('basic')">Update</a>
+   
+
+    </div>
+  <!-- VPN Button -->
+  <div class="vpn-sidebar-btn text-center">
+    <button class="btn-vpn" id="vpnButton" onclick="connectVPN()">Connect to VPN</button>
+  </div>
+</div>
+
+  </div>
+
+  
+  <div class="content">
+    <div style="margin-bottom: 50px;">
+      <h2>System Booster</h2>
+      <p>Optimize your system performance by enhancing critical system resources</p>
+    </div>
+
+    
+
+    <div class="central-boost-container">
+      <div class="boost-circle" id="boost-circle">
+        <div class="boost-circle-outer">
+          <div class="boost-progress" id="boost-progress"></div>
+        </div>
+        <div class="boost-content">
+          <div class="boost-label" id="boost-percentage">0%</div>
+          <div class="boost-status-text" id="boost-status-text">Ready to Optimize</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">🧹</div>
+        <div class="stat-value" id="memory-freed-stat">0 MB</div>
+        <div class="stat-label">Memory Freed</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">⚡</div>
+        <div class="stat-value" id="cpu-usage-stat">32%</div>
+        <div class="stat-label">CPU Usage</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">🚀</div>
+        <div class="stat-value" id="performance-gain-stat">0%</div>
+        <div class="stat-label">Performance Gain</div>
+      </div>
+    </div>
+
+    <div class="enhancer-section" id="booster">
+      <!-- Memory Optimization Section -->
+      <div class="boost-container">
+        <div class="section-title">MEMORY OPTIMIZATION</div>
+
+        <!-- Memory usage visualization -->
+        <div class="memory-usage">
+          <div class="memory-label">
+            <span>Current RAM Usage</span>
+            <span id="ram-usage-percentage">92%</span>
+          </div>
+          <div class="memory-bar">
+            <div id="memory-used" class="memory-used" style="width: 92%;"></div>
+          </div>
+          <div class="memory-details">
+            <span>RAM capacity 7.9GB</span>
+            <span id="ram-available">634MB available</span>
+          </div>
+        </div>
+
+        <!-- Running processes -->
+        <div class="processes-container">
+          <div class="section-subtitle">RUNNING PROCESSES</div>
+          <div class="processes-list" id="processes-list">
+            <div class="process-item">
+              <div class="process-details">
+                <div class="process-name">Chrome.exe</div>
+                <div class="process-memory">1240 MB</div>
+              </div>
+              <div class="checkbox-toggle">
+                <input type="checkbox" id="process1" checked />
+                <label for="process1"></label>
+              </div>
+            </div>
+            <div class="process-item">
+              <div class="process-details">
+                <div class="process-name">Explorer.exe</div>
+                <div class="process-memory">380 MB</div>
+              </div>
+              <div class="checkbox-toggle">
+                <input type="checkbox" id="process2" checked />
+                <label for="process2"></label>
+              </div>
+            </div>
+            <div class="process-item">
+              <div class="process-details">
+                <div class="process-name">RuntimeBroker.exe</div>
+                <div class="process-memory">156 MB</div>
+              </div>
+              <div class="checkbox-toggle">
+                <input type="checkbox" id="process3" checked />
+                <label for="process3"></label>
+              </div>
+            </div>
+            <div class="process-item">
+              <div class="process-details">
+                <div class="process-name">Spotify.exe</div>
+                <div class="process-memory">432 MB</div>
+              </div>
+              <div class="checkbox-toggle">
+                <input type="checkbox" id="process4" checked />
+                <label for="process4"></label>
+              </div>
+            </div>
+            <div class="process-item">
+              <div class="process-details">
+                <div class="process-name">Discord.exe</div>
+                <div class="process-memory">389 MB</div>
+              </div>
+              <div class="checkbox-toggle">
+                <input type="checkbox" id="process5" checked />
+                <label for="process5"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="boost-actions">
+          <button id="boost-button" class="action-button primary">Boost Now</button>
+          <button id="auto-boost-button" class="action-button secondary">Auto Boost</button>
+        </div>
+      </div>
+        
+<div class="performance-container"> 
+        <div class="section-title">FOCUS MODE</div>
+        
+        <!-- Main Focus Toggle -->
+        <div class="focus-master-toggle">
+          <div class="toggle-label">
+            <span>Focus Mode</span>
+            <span id="focus-status">Off</span>
+          </div>
+          <div class="toggle-switch">
+            <input type="checkbox" id="focus-master-toggle" />
+            <label for="focus-master-toggle"></label>
+          </div>
+        </div>
+      
+        <!-- Focus Apps Section -->
+        <div class="performance-section">
+          <div class="section-subtitle">FOCUS APPS</div>
+          <div class="focus-apps-container">
+            <div class="focus-app-item">
+              <div class="focus-app-details">
+                <div class="focus-app-name">Chrome</div>
+                <div class="focus-app-type">Browser</div>
+              </div>
+              <div class="toggle-switch">
+                <input type="checkbox" id="focus-app1" checked />
+                <label for="focus-app1"></label>
+              </div>
+            </div>
+            <div class="focus-app-item">
+              <div class="focus-app-details">
+                <div class="focus-app-name">Visual Studio Code</div>
+                <div class="focus-app-type">Editor</div>
+              </div>
+              <div class="toggle-switch">
+                <input type="checkbox" id="focus-app2" checked />
+                <label for="focus-app2"></label>
+              </div>
+            </div>
+            <div class="focus-app-item">
+              <div class="focus-app-details">
+                <div class="focus-app-name">Word</div>
+                <div class="focus-app-type">Office</div>
+              </div>
+              <div class="toggle-switch">
+                <input type="checkbox" id="focus-app3" />
+                <label for="focus-app3"></label>
+              </div>
+            </div>
+            <div class="focus-app-item">
+              <div class="focus-app-details">
+                <div class="focus-app-name">Notepad</div>
+                <div class="focus-app-type">Editor</div>
+              </div>
+              <div class="toggle-switch">
+                <input type="checkbox" id="focus-app4" />
+                <label for="focus-app4"></label>
+              </div>
+            </div>
+            <div class="focus-app-add">
+              <button class="add-app-button"><i class="fas fa-plus"></i> Add App</button>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Focus Features -->
+        <div class="performance-section">
+          <div class="section-subtitle">FOCUS FEATURES</div>
+          <div class="focus-features">
+            <div class="focus-feature-item">
+              <div class="feature-details">
+                <div class="feature-name">Auto Mute Notifications</div>
+                <div class="feature-description">Silence notifications while focus apps are active</div>
+              </div>
+              <div class="toggle-switch">
+                <input type="checkbox" id="feature-mute" checked />
+                <label for="feature-mute"></label>
+              </div>
+            </div>
+            <div class="focus-feature-item">
+              <div class="feature-details">
+                <div class="feature-name">Limit Background Processes</div>
+                <div class="feature-description">Suspend non-essential background apps</div>
+              </div>
+              <div class="toggle-switch">
+                <input type="checkbox" id="feature-limit" checked />
+                <label for="feature-limit"></label>
+              </div>
+            </div>
+            <div class="focus-feature-item">
+              <div class="feature-details">
+                <div class="feature-name">Auto Do Not Disturb</div>
+                <div class="feature-description">Enable system-wide Do Not Disturb mode</div>
+              </div>
+              <div class="toggle-switch">
+                <input type="checkbox" id="feature-dnd" checked />
+                <label for="feature-dnd"></label>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Focus Schedule -->
+        <div class="performance-section">
+          <div class="section-subtitle">FOCUS SCHEDULE</div>
+          <div class="focus-schedule">
+            <div class="schedule-days">
+              <div class="day-toggle">
+                <input type="checkbox" id="day-mon" checked />
+                <label for="day-mon">M</label>
+              </div>
+              <div class="day-toggle">
+                <input type="checkbox" id="day-tue" checked />
+                <label for="day-tue">T</label>
+              </div>
+              <div class="day-toggle">
+                <input type="checkbox" id="day-wed" checked />
+                <label for="day-wed">W</label>
+              </div>
+              <div class="day-toggle">
+                <input type="checkbox" id="day-thu" checked />
+                <label for="day-thu">T</label>
+              </div>
+              <div class="day-toggle">
+                <input type="checkbox" id="day-fri" checked />
+                <label for="day-fri">F</label>
+              </div>
+              <div class="day-toggle">
+                <input type="checkbox" id="day-sat" />
+                <label for="day-sat">S</label>
+              </div>
+              <div class="day-toggle">
+                <input type="checkbox" id="day-sun" />
+                <label for="day-sun">S</label>
+              </div>
+            </div>
+            <div class="schedule-time">
+              <div class="time-field">
+                <label>Start</label>
+                <input type="time" value="09:00" id="focus-start-time" />
+              </div>
+              <div class="time-field">
+                <label>End</label>
+                <input type="time" value="17:00" id="focus-end-time" />
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Pomodoro Timer -->
+        <div class="performance-section">
+          <div class="section-subtitle">POMODORO TIMER</div>
+          <div class="pomodoro-container">
+            <div class="pomodoro-timer">
+              <div class="timer-display" id="pomodoro-display">25:00</div>
+              <div class="timer-status" id="pomodoro-status">Ready to start</div>
+            </div>
+            <div class="pomodoro-controls">
+              <button class="timer-button" id="pomodoro-start"><i class="fas fa-play"></i></button>
+              <button class="timer-button" id="pomodoro-pause"><i class="fas fa-pause"></i></button>
+              <button class="timer-button" id="pomodoro-reset"><i class="fas fa-redo"></i></button>
+            </div>
+            <div class="pomodoro-settings">
+              <div class="setting-item">
+                <label>Work</label>
+                <select id="pomodoro-work">
+                  <option value="15">15 min</option>
+                  <option value="20">20 min</option>
+                  <option value="25" selected>25 min</option>
+                  <option value="30">30 min</option>
+                  <option value="45">45 min</option>
+                  <option value="60">60 min</option>
+                </select>
+              </div>
+              <div class="setting-item">
+                <label>Break</label>
+                <select id="pomodoro-break">
+                  <option value="3">3 min</option>
+                  <option value="5" selected>5 min</option>
+                  <option value="10">10 min</option>
+                  <option value="15">15 min</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Focus Insights -->
+        <div class="performance-section">
+          <div class="section-subtitle">FOCUS INSIGHTS</div>
+          <div class="focus-insights">
+            <div class="insight-stats">
+              <div class="insight-stat-item">
+                <div class="insight-value">5h 45m</div>
+                <div class="insight-label">Weekly Focus Time</div>
+              </div>
+              <div class="insight-stat-item">
+                <div class="insight-value">+28%</div>
+                <div class="insight-label">Productivity Increase</div>
+              </div>
+            </div>
+            <div class="insight-chart">
+              <div class="insight-chart-title">Top Distractions</div>
+              <div class="distraction-item">
+                <div class="distraction-name">Discord</div>
+                <div class="distraction-bar-container">
+                  <div class="distraction-bar" style="width: 75%"></div>
+                  <div class="distraction-value">15 times</div>
+                </div>
+              </div>
+              <div class="distraction-item">
+                <div class="distraction-name">Email Notifications</div>
+                <div class="distraction-bar-container">
+                  <div class="distraction-bar" style="width: 60%"></div>
+                  <div class="distraction-value">12 times</div>
+                </div>
+              </div>
+              <div class="distraction-item">
+                <div class="distraction-name">Browser Notifications</div>
+                <div class="distraction-bar-container">
+                  <div class="distraction-bar" style="width: 40%"></div>
+                  <div class="distraction-value">8 times</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <div class="apply-section">
+          <button id="apply-focus-settings" class="action-button primary full-width">Apply Settings</button>
+        </div>
+      </div>
+
+   <!-- VPN Modal -->
+   <div id="vpnModal" class="vpn-modal d-none">
+    <div class="vpn-modal-content">
+      <span class="close-button" onclick="closeVPNModal()">×</span>
+      <div class="modal-icon">
+        <div style="color: #00c389; font-size: 48px;"><img src="./png-clipart-man-riding-on-spaceship-illustration-website-service-rocket-man-rocket-rocket-english-computer-wallpaper-thumbnail-removebg-preview.png" alt=""></div>
+      </div>
+      <h4>VPN Connected</h4>
+      <p class="modal-subtitle">Your secure connection has been established successfully.</p>
+      <button class="btn btn-success modal-close-btn" onclick="closeVPNModal()">Close</button>
+    </div>
+  </div>
+<!-- SysGenie LLM Assistant -->
+  <!-- SysGenie Interactive Chatbox -->
+  <div id="sysgenie-box" class="d-none">
+    <div class="header d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <img src="./image-removebg-preview.png" alt="SysGenie" id="genie-avatar" />
+        <strong class="ms-2">SysGenie</strong>
+      </div>
+      <button onclick="toggleAssistant()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">×</button>
+    </div>
+
+    <div class="body" id="genieChatLog">
+      <p class="assistant"><em>Hi! What would you like to do?</em></p>
+      <div class="quick-options">
+        <button onclick="simulateLLM('Do a quick scan')">Quick Scan</button>
+        <button onclick="simulateLLM('Boost system performance')">Boost</button>
+        <button onclick="simulateLLM('Check drive health')">Drive Health</button>
+        <button onclick="simulateLLM('Connect to VPN')">Connect VPN</button>
+      </div>
+    </div>
+
+    <div class="footer d-flex align-items-center">
+      <button id="fileUploadBtn" class="upload-btn" onclick="document.getElementById('fileInput').click()">+</button>
+      <input type="file" id="fileInput" style="display: none" onchange="scanFileForVirus(event)">
+      <input type="text" id="genieInput" placeholder="Ask anything or upload file for scanning.." onkeydown="handleGenieInput(event)" class="flex-grow-1 ms-2" />
+    </div>
+  </div>
+
+  <!-- Floating Chatbot Toggle Button -->
+  <div id="sysgenie-toggle" onclick="toggleAssistant()">
+    <img src="./image-removebg-preview.png" alt="SysGenie" id="sysgenie-icon" />
+    <span class="message-label">Chat with me</span>
+  </div>
+  <div id="suggestionPopup">
+    <button class="btn-close" onclick="hideSuggestionPopup()">×</button>
+    <h5 id="suggestionTitle"></h5>
+    <p id="suggestionMessage"></p>
+  </div>
+  
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+  <script src="./Booster.script.js"></script>
+  <script src="./script.js"></script>
+
+</body>
+</html>

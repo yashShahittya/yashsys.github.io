@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Updates</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div class="sidebar d-flex flex-column justify-content-between">
+    <div>
+      <h4 class="text-center">SysMonitor</h4>
+      <a href="./index.html" class="nav-link" onclick="setMode('basic')">Dashboard</a>
+      <a href="./Booster.html" class="nav-link" onclick="setMode('basic')">Booster</a>
+      <a href="./Cleaner.html" class="nav-link" onclick="setMode('basic')">Cleaner</a>
+      <a href="./clone.html" class="nav-link">Virtual Repair</a>
+      <a href="./troubleshoot.html" class="nav-link">Troubleshooter</a>
+      <a href="./security.html" class="nav-link">Security</a>
+      <a href="./update.html" class="nav-link active" onclick="setMode('basic')">Update</a>
+    </div>
+    <div class="vpn-sidebar-btn text-center">
+      <button class="btn-vpn" id="vpnButton" onclick="connectVPN()">Connect to VPN</button>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <h3 class="text-light mb-4">System Updates</h3>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4" id="updateCards"></div>
+  </div>
+ <!-- VPN Modal Reused -->
+ <div id="vpnModal" class="vpn-modal d-none">
+    <div class="vpn-modal-content">
+      <span class="close-button" onclick="closeVPNModal()">×</span>
+      <div class="modal-icon">
+        <div style="color: #00c389; font-size: 48px;"><img src="./png-clipart-man-riding-on-spaceship-illustration-website-service-rocket-man-rocket-rocket-english-computer-wallpaper-thumbnail-removebg-preview.png" alt=""></div>
+      </div>
+      <h4>VPN Connected</h4>
+      <p class="modal-subtitle">Secure access to the cloud environment is active.</p>
+      <button class="btn btn-success modal-close-btn" onclick="closeVPNModal()">Close</button>
+    </div>
+  </div>
+  <!-- Reusable Modal -->
+  <div class="modal fade" id="updateModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateModalTitle">Update Details</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" id="updateModalBody"></div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-success" id="modalContinueBtn">Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./script.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const updates = {
+      software: {
+        title: 'Software Update',
+        desc: 'Windows Malicious Software Removal Tool x64 - v5.132 (KB890830)',
+        info: 'Removes malware and helps clean infected systems.'
+      },
+      driver: {
+        title: 'Driver Update',
+        desc: 'Intel Wireless Driver 22.250.1.2 (Bluetooth, Wi-Fi)',
+        info: 'Improves wireless performance and reliability.'
+      },
+      os: {
+        title: 'OS Update',
+        desc: '2025-04 Cumulative Update for Windows 10 Version 22H2 (KB5055518)',
+        info: 'Includes quality improvements and security fixes.'
+      },
+      dotnet: {
+        title: '.NET Framework',
+        desc: '2025-01 Cumulative for .NET 3.5, 4.8 (KB5050188)',
+        info: 'Ensures compatibility and performance updates for .NET apps.'
+      }
+    };
+
+    const container = document.getElementById('updateCards');
+    const modal = new bootstrap.Modal(document.getElementById('updateModal'));
+    const modalTitle = document.getElementById('updateModalTitle');
+    const modalBody = document.getElementById('updateModalBody');
+    const modalBtn = document.getElementById('modalContinueBtn');
+    let currentType = '';
+
+    Object.entries(updates).forEach(([id, update]) => {
+      const html = `
+        <div class="col">
+          <div class="card-custom p-3 update-card text-light position-relative">
+            <h5 class="mb-2">${update.title}</h5>
+            <p><strong>Status:</strong> Pending</p>
+            <p><strong>Last Checked:</strong> Yesterday, 9:17 AM</p>
+            <p class="small text-muted">${update.desc}</p>
+            <div class="progress mb-2 d-none" id="${id}Progress">
+              <div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+            </div>
+            <button class="btn btn-sm btn-success w-100" onclick="showUpdateModal('${id}')">Update</button>
+            <div id="${id}Updated" class="small mt-2 text-success d-none">Updated successfully!</div>
+          </div>
+        </div>`;
+
+      container.insertAdjacentHTML('beforeend', html);
+    });
+
+    function showUpdateModal(type) {
+      const update = updates[type];
+      currentType = type;
+      modalTitle.textContent = `${update.title} Details`;
+      modalBody.innerHTML = `
+        <p><strong>Status:</strong> Pending download</p>
+        <p><strong>Update:</strong> ${update.desc}</p>
+        <p><strong>Description:</strong> ${update.info}</p>
+        <p class="text-danger">Your device is missing important security and quality fixes.</p>
+      `;
+      modal.show();
+    }
+
+    modalBtn.onclick = function () {
+  const progress = document.getElementById(`${currentType}Progress`);
+  const done = document.getElementById(`${currentType}Updated`);
+  const card = progress.closest('.update-card');
+  const status = card.querySelector('p strong');
+
+  progress.classList.remove('d-none');
+  done.classList.add('d-none');
+  status.textContent = 'Status: Updating...';
+
+  // ✅ Hide the modal
+  modal.hide();
+
+  setTimeout(() => {
+    progress.classList.add('d-none');
+    done.classList.remove('d-none');
+    status.textContent = 'Status: Updated ✅';
+  }, 2500);
+};
+
+  </script>
+  <!-- SysGenie Interactive Chatbox -->
+<div id="sysgenie-box" class="d-none">
+  <div class="header d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center">
+      <img src="./image-removebg-preview.png" alt="SysGenie" id="genie-avatar" />
+      <strong class="ms-2">SysGenie</strong>
+    </div>
+    <button onclick="toggleAssistant()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">×</button>
+  </div>
+
+  <div class="body" id="genieChatLog">
+    <p class="assistant"><em>Hi! What would you like to do?</em></p>
+    <div class="quick-options">
+      <button onclick="simulateLLM('Do a quick scan')">Quick Scan</button>
+      <button onclick="simulateLLM('Boost system performance')">Boost</button>
+      <button onclick="simulateLLM('Check drive health')">Drive Health</button>
+      <button onclick="simulateLLM('Connect to VPN')">Connect VPN</button>
+    </div>
+  </div>
+
+  <div class="footer d-flex align-items-center">
+    <button id="fileUploadBtn" class="upload-btn" onclick="document.getElementById('fileInput').click()">+</button>
+    <input type="file" id="fileInput" style="display: none" onchange="scanFileForVirus(event)">
+    <input type="text" id="genieInput" placeholder="Ask anything or upload file for scanning.." onkeydown="handleGenieInput(event)" class="flex-grow-1 ms-2" />
+  </div>
+</div>
+
+<!-- Floating Chatbot Toggle Button -->
+<div id="sysgenie-toggle" onclick="toggleAssistant()">
+  <img src="./image-removebg-preview.png" alt="SysGenie" id="sysgenie-icon" />
+  <span class="message-label">Chat with me</span>
+</div>
+
+</body>
+</html>

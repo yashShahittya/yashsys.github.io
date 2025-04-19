@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>System Monitor Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./cleaner-styles.css"/>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+ <!-- Sidebar -->
+ <div class="sidebar d-flex flex-column justify-content-between">
+  <div>
+    <h4 class="text-center">SysMonitor</h4>
+    <a href="./index.html" class="nav-link" onclick="setMode('basic')">Dashboard</a>
+    <a href="./Booster.html" class="nav-link" onclick="setMode('basic')">Booster</a>
+    <a href="./Cleaner.html" class="nav-link active" onclick="setMode('basic')">Cleaner</a>
+    <a href="./clone.html" class="nav-link">Virtual Repair</a>
+    <a href="./troubleshoot.html" class="nav-link">Troubleshooter</a>
+    <a href="./security.html" class="nav-link">Security</a>
+    <a href="./update.html" class="nav-link" onclick="setMode('basic')">Update</a>
+  
+
+  </div>
+  <div class="vpn-sidebar-btn text-center">
+    <button class="btn-vpn" id="vpnButton" onclick="connectVPN()">Connect to VPN</button>
+  </div>
+</div>
+
+ <!-- Main content -->
+ <div class="content">
+    <div style="margin-bottom: 50px;">
+      <h2>System Cleaner</h2>
+      <p>Optimize your system performance by removing unnecessary files</p>
+    </div>
+
+    <div class="cleaner-section">
+      <!-- Scanner Section -->
+      <div class="scan-container">
+        <div class="section-title">SYSTEM SCAN</div>
+        <div class="scan-status">
+          <div id="scan-icon" class="status-icon">🔍</div>
+          <div id="scan-message">Ready to scan your system</div>
+        </div>
+        <div class="scan-progress-container">
+          <div id="scan-progress-bar" class="progress-bar">
+            <div id="scan-progress-fill" class="progress-fill" style="width: 0%;"></div>
+          </div>
+          <div id="scan-progress-text">0%</div>
+        </div>
+
+        <div class="scan-results">
+          <div class="result-item"><div class="result-icon">🗑️</div><div class="result-details"><div class="result-title">Recycle Bin</div><div id="recycle-size" class="result-value">0 MB</div></div></div>
+          <div class="result-item"><div class="result-icon">📁</div><div class="result-details"><div class="result-title">Temporary Files</div><div id="temp-size" class="result-value">0 MB</div></div></div>
+          <div class="result-item"><div class="result-icon">🌐</div><div class="result-details"><div class="result-title">Browser Cache</div><div id="cache-size" class="result-value">0 MB</div></div></div>
+          <div class="result-item"><div class="result-icon">📦</div><div class="result-details"><div class="result-title">Downloaded Packages</div><div id="packages-size" class="result-value">0 MB</div></div></div>
+        </div>
+
+        <div class="total-result">
+          <div class="total-title">Total Space to Clean</div>
+          <div id="total-size" class="total-value">0 MB</div>
+        </div>
+
+        <div class="action-buttons">
+          <button id="scan-button" class="action-button primary">Scan Now</button>
+          <button id="clean-button" class="action-button secondary" disabled>Clean Files</button>
+        </div>
+      </div>
+
+      <!-- Schedule Section -->
+      <div class="schedule-container">
+        <div class="section-title">SCHEDULE CLEANING</div>
+        <div class="schedule-form">
+          <div class="form-group">
+            <label for="schedule-frequency">Frequency</label>
+            <select id="schedule-frequency" class="form-control">
+              <option value="once">One Time</option>
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+            </select>
+          </div>
+          <div class="form-group" id="date-group">
+            <label for="schedule-date">Date</label>
+            <input type="date" id="schedule-date" class="form-control" />
+          </div>
+          <div class="form-group">
+            <label for="schedule-time">Time</label>
+            <input type="time" id="schedule-time" class="form-control" />
+          </div>
+          <div class="form-group checkboxes">
+            <div class="checkbox-item"><input type="checkbox" id="clean-recycle" checked /><label for="clean-recycle">Recycle Bin</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="clean-temp" checked /><label for="clean-temp">Temporary Files</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="clean-cache" checked /><label for="clean-cache">Browser Cache</label></div>
+            <div class="checkbox-item"><input type="checkbox" id="clean-packages" checked /><label for="clean-packages">Downloaded Packages</label></div>
+          </div>
+          <button id="schedule-button" class="action-button primary full-width">Schedule Cleaning</button>
+        </div>
+        <div class="scheduled-tasks">
+          <div class="section-subtitle">SCHEDULED TASKS</div>
+          <div id="no-tasks-message" class="no-tasks">No scheduled cleaning tasks</div>
+          <div id="tasks-list" class="tasks-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cleaner-footer">
+      <div class="footer-info">Last cleaned: Never</div>
+      <div class="footer-info">Total space recovered: 0 MB</div>
+    </div>
+  </div>
+
+    
+     <!-- SysGenie Interactive Chatbox -->
+  <div id="sysgenie-box" class="d-none">
+    <div class="header d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <img src="./image-removebg-preview.png" alt="SysGenie" id="genie-avatar" />
+        <strong class="ms-2">SysGenie</strong>
+      </div>
+      <button onclick="toggleAssistant()" style="background: none; border: none; font-size: 1.2rem; cursor: pointer;">×</button>
+    </div>
+
+    <div class="body" id="genieChatLog">
+      <p class="assistant"><em>Hi! What would you like to do?</em></p>
+      <div class="quick-options">
+        <button onclick="simulateLLM('Do a quick scan')">Quick Scan</button>
+        <button onclick="simulateLLM('Boost system performance')">Boost</button>
+        <button onclick="simulateLLM('Check drive health')">Drive Health</button>
+        <button onclick="simulateLLM('Connect to VPN')">Connect VPN</button>
+      </div>
+    </div>
+
+    <div class="footer d-flex align-items-center">
+      <button id="fileUploadBtn" class="upload-btn" onclick="document.getElementById('fileInput').click()">+</button>
+      <input type="file" id="fileInput" style="display: none" onchange="scanFileForVirus(event)">
+      <input type="text" id="genieInput" placeholder="Ask anything or upload file for scanning.." onkeydown="handleGenieInput(event)" class="flex-grow-1 ms-2" />
+    </div>
+  </div>
+
+  <!-- Floating Chatbot Toggle Button -->
+  <div id="sysgenie-toggle" onclick="toggleAssistant()">
+    <img src="./image-removebg-preview.png" alt="SysGenie" id="sysgenie-icon" />
+    <span class="message-label">Chat with me</span>
+  </div>
+ <!-- VPN Modal Reused -->
+ <div id="vpnModal" class="vpn-modal d-none">
+  <div class="vpn-modal-content">
+    <span class="close-button" onclick="closeVPNModal()">×</span>
+    <div class="modal-icon">
+      <div style="color: #00c389; font-size: 48px;"><img src="./png-clipart-man-riding-on-spaceship-illustration-website-service-rocket-man-rocket-rocket-english-computer-wallpaper-thumbnail-removebg-preview.png" alt=""></div>
+    </div>
+    <h4>VPN Connected</h4>
+    <p class="modal-subtitle">Secure access to the cloud environment is active.</p>
+    <button class="btn btn-success modal-close-btn" onclick="closeVPNModal()">Close</button>
+  </div>
+</div>
+
+  
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.1/chart.min.js"></script>
+    <script src="cleaner-script.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>

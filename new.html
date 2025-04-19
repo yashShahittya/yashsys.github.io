@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=
+    , initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    
+  <div class="top-navbar">
+    <div class="top-navbar-content">
+      <div class="top-navbar-title">
+        <!-- This space intentionally left empty -->
+      </div>
+      <div class="top-navbar-actions">
+        <div class="navbar-icon" id="notification-icon" title="Notifications">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge">0</span>
+        </div>
+        <div class="navbar-icon" id="settings-icon" title="Settings">
+          <i class="fas fa-cog"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Add this right before the end of the body tag -->
+  <div id="notificationPanel" class="side-panel">
+    <div class="panel-header">
+      <h3>Notifications</h3>
+      <span class="close-panel">&times;</span>
+    </div>
+    <div class="panel-content">
+      <p class="no-notifications">No new notifications</p>
+    </div>
+  </div>
+  
+  <div id="settingsPanel" class="side-panel">
+  <div class="panel-header">
+    <h3>Settings</h3>
+    <span class="close-panel">&times;</span>
+  </div>
+  <div class="panel-content">
+    <div class="settings-group">
+      <h4>Appearance</h4>
+      <div class="setting-item">
+        <label for="darkMode">Dark Mode</label>
+        <label class="switch">
+          <input type="checkbox" id="darkMode" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+    <div class="settings-group">
+      <h4>Notifications</h4>
+      <div class="setting-item">
+        <label for="enableNotifications">Enable Notifications</label>
+        <label class="switch">
+          <input type="checkbox" id="enableNotifications" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+</div>
+      <script src="./java.js"></script>
+</body>
+</html>

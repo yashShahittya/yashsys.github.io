@@ -1,0 +1,567 @@
+:root {
+    --primary-color: #00cc66;
+    --secondary-color: #f15a29;
+    --dark-bg: #1c1c24;
+    --darker-bg: #141418;
+    --light-text: #e6e6e6;
+    --accent-red: #ff3b30;
+    --accent-blue: #007aff;
+  }
+  
+  
+
+/* Top Navigation Bar */
+.top-navbar {
+    position: fixed;
+    top: 0;
+    left: 220px; /* Same as sidebar width */
+    right: 0;
+    height: 60px;
+    background-color: #111114;
+    z-index: 99;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .top-navbar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    padding: 0 30px;
+  }
+  
+  .top-navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  
+  .navbar-icon {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #1c1c24;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .navbar-icon:hover {
+    background-color: #24243a;
+  }
+  
+  .navbar-icon i {
+    font-size: 18px;
+    color: var(--light-text);
+  }
+  
+  /* Notification Badge */
+  .notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    background-color: var(--accent-red);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(255, 59, 48, 0.5);
+    transition: transform 0.2s;
+  }
+  
+  .notification-badge:not(:empty) {
+    transform: scale(1.1);
+  }
+  
+  /* Side Panels */
+  .side-panel {
+    position: fixed;
+    top: 0;
+    right: -350px;
+    width: 350px;
+    height: 100vh;
+    background-color: #1c1c24;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+    z-index: 200;
+    transition: right 0.3s ease;
+  }
+  
+  .side-panel.active {
+    right: 0;
+  }
+  
+  .panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    border-bottom: 1px solid #2a2a36;
+  }
+  
+  .panel-header h3 {
+    margin: 0;
+    color: var(--primary-color);
+  }
+  
+  .close-panel {
+    font-size: 24px;
+    cursor: pointer;
+    color: var(--light-text);
+  }
+  
+  .panel-content {
+    padding: 20px;
+    overflow-y: auto;
+    max-height: calc(100vh - 70px);
+  }
+  
+  .no-notifications {
+    color: #888;
+    font-style: italic;
+    text-align: center;
+    padding: 20px 0;
+  }
+  
+ /* Base notification styling */
+.notification-item {
+    background-color: #2a2a36;
+    border-radius: 6px;
+    padding: 12px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 12px;
+    position: relative;
+    border-left: 4px solid transparent;
+    transition: all 0.2s ease;
+    animation: notifyPulse 0.3s ease-out forwards;
+  }
+  
+  .notification-item:hover {
+    background-color: #32323f;
+  }
+  
+  /* Warning notification styling */
+  .notification-item.warning {
+    border-left-color: #ff3b30;
+    cursor: default;
+  }
+  
+  .notification-item.warning .notification-title {
+    color: #ff7b72;
+  }
+  
+  /* Notification components */
+.notification-icon {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .notification-content {
+    flex: 1;
+  }
+  
+  .notification-time {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 2px;
+  }
+  
+  .notification-title {
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: white;
+  }
+  
+  .notification-message {
+    font-size: 13px;
+    color: #bbb;
+    line-height: 1.4;
+  }
+  
+  /* Close button for notifications */
+.notification-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    font-size: 16px;
+    color: #ccc;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .notification-close:hover {
+    background-color: rgba(255, 59, 48, 0.5);
+    color: white;
+  }
+  
+  /* Clickable notifications styling */
+  .notification-item.info.clickable {
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+  }
+  
+  .notification-item.info.clickable:hover {
+    background-color: #32323f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Visual indicator for clickable notifications */
+  .notification-item.info.clickable::after {
+    content: '›';
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 20px;
+    color: rgba(255, 255, 255, 0.5);
+    transition: all 0.3s;
+  }
+  
+  .notification-item.info.clickable:hover::after {
+    right: 28px;
+    color: rgba(255, 255, 255, 0.8);
+  }
+  
+  /* Expanded notification styling */
+  .notification-item.expanded {
+    background-color: rgba(0, 204, 102, 0.1);
+    transform: scale(1.03);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    border-left-width: 6px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    z-index: 10;
+  }
+  
+  .notification-item.expanded::after {
+    transform: translateY(-50%) rotate(135deg);
+    right: 14px;
+  }
+  
+  /* Action message styling */
+  .action-message {
+    background-color: #1a3b2a;
+    border-left: 4px solid #00cc66;
+    margin: 0 0 16px 0;
+    padding: 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    display: none;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+  
+  .action-message.visible {
+    display: block;
+    animation: fadeInExpand 0.4s ease-out forwards;
+  }
+  
+  .action-message p {
+    color: #e6e6e6;
+    margin: 0 0 12px 0;
+  }
+  
+  /* Action message header with close button */
+  .action-message-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10px;
+  }
+  
+  .action-message-close {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    font-size: 16px;
+    color: #ccc;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .action-message-close:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+  }
+  
+  /* Action button styling */
+  .action-button {
+    background-color: #00cc66;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s;
+    display: block;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .action-button:hover {
+    background-color: #00b359;
+    transform: translateY(-2px);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Animations */
+  @keyframes notifyPulse {
+    0% { transform: translateX(-20px); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+  
+  @keyframes fadeInExpand {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Settings panel styling */
+.settings-group {
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #2a2a36;
+}
+
+.settings-group h4 {
+  color: var(--primary-color);
+  margin-bottom: 15px;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  padding: 8px 0;
+}
+
+/* Enhanced toggle switch styling */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #3a3a48;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+/* Status icons within slider */
+.slider:after {
+  font-family: 'Font Awesome 6 Free';
+  font-weight: 900;
+  position: absolute;
+  right: 8px;
+  bottom: 3px;
+  color: #888;
+  content: "\f00d"; /* X icon for disabled */
+  font-size: 14px;
+}
+
+input:checked + .slider {
+  background-color: var(--primary-color);
+}
+
+input:checked + .slider:before {
+  transform: translateX(24px);
+}
+
+input:checked + .slider:after {
+  content: "\f00c"; /* Check icon for enabled */
+  left: 8px;
+  right: auto;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Focus styling */
+input:focus + .slider {
+  box-shadow: 0 0 1px var(--primary-color);
+}
+
+/* Setting item hover effect */
+.setting-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+#topLeftControls {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 1100;
+}
+#topRightControls {
+  position: fixed;
+  top: 15px;
+  right: 20px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  z-index: 1100;
+}
+
+/* Optional: adjust chatbot button appearance */
+#topRightControls #sysgenie-toggle {
+  position: relative;
+  top: 0;
+  margin-right: 5px;
+  cursor: pointer;
+}
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: -350px;
+  width: 350px;
+  height: 100vh;
+  background-color: #1c1c24;
+  transition: right 0.3s ease;
+  z-index: 2000;
+}
+
+.side-panel.active {
+  right: 0;
+}
+
+.navbar-icon {
+  width: 40px;
+  height: 40px;
+  background: #2d2d44;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 12px;
+  cursor: pointer;
+}
+/* === Top Right Controls (Chatbot + Notification + Settings) === */
+#topRightControls {
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Chatbot Button Already Has Style – We Make Sure It Works in Line */
+#topRightControls #sysgenie-toggle {
+  position: static;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  animation: genieBeep 1.5s infinite alternate;
+}
+
+#topRightControls #sysgenie-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 10px #00ffcc;
+  border: 2px solid #00c389;
+}
+
+#topRightControls .message-label {
+  font-size: 0.7rem;
+  color: #fff;
+  background-color: #00c389;
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-top: 4px;
+}
+
+/* Notification & Settings Icons */
+#topRightControls .navbar-icon {
+  position: relative;
+  background-color: #1c1c24;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+
+#topRightControls .navbar-icon:hover {
+  background-color: #2a2a36;
+}
+
+#topRightControls .navbar-icon i {
+  font-size: 18px;
+  color: var(--light-text);
+}
+
+/* Notification Badge */
+#topRightControls .notification-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  background-color: #ff3b30;
+  color: white;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 5px rgba(255, 59, 48, 0.5);
+}
