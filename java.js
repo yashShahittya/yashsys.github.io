@@ -311,7 +311,7 @@ function initTopNavbar() {
         window.location.href = './Booster.html';
         break;
       default:
-        console.warn('Unknown page type:', pageType);
+           window.location.href = './update.html';
         break;
     }
   }
